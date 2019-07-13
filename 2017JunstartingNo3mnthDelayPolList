@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+from datetime import datetime
+import os
+
+PROJ = r'C:\\galati_files\\pyscripts\\DG Payments\\'
+DATA = os.path.join(PROJ, 'data')
+RESULT = os.path.join(PROJ, 'output-files')
+
+
+file_name = '\\2017JunStartingPolListFelix_Felix(table).csv'
+# file_name = '\\2017JunStartingPolListFelix_WOP(table).csv'
+
+file_name_res = file_name[48:-10]
+
+# need to change to (table, which is comb of Felix and Wop)
+df_RiskAllAgent = pd.read_csv(DATA + '\\FelixRiskwithLifeNoBenNo@20170701(table)_Part1Shortv3.csv',
+				usecols = ['POL_NO', 'policy_id', 'dres', 'endd', 'stat', 'statd'],
+				dtype = {'stat':np.int32, 'dres':str},
+				skipinitialspace=True)
+
+df_FelixAgent = pd.read_csv(RESULT +'\\FelixAgentYYMM(table).csv')
+
+df_LapDate = pd.read_csv(os.path.join(DATA, 'MPE files') +\
+	   '\\LapDate20170703.txt',
+	   dtype = {'OLD-TABLE-CODE':np.int32, 'SUM-INSURED':np.int32,
+	   'STATUS':str, 'CAUSE':str})
